@@ -11,8 +11,8 @@ body {
   font-family: Arial, sans-serif;
   text-align: center;
   color: white;
+  overflow: hidden;
 
-  /* Fondo tipo acuarela */
   background: 
     radial-gradient(circle at 20% 30%, rgba(255,182,193,0.6), transparent 40%),
     radial-gradient(circle at 80% 20%, rgba(255,105,180,0.4), transparent 40%),
@@ -28,7 +28,9 @@ body {
   padding: 40px;
   border-radius: 20px;
   display: inline-block;
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(6px);
+  animation: aparecer 1.5s ease;
+  transition: 0.5s;
 }
 
 h1 {
@@ -39,14 +41,45 @@ h1 {
   font-size: 2em;
   margin-top: 20px;
 }
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Corazones flotando */
+.heart {
+  position: fixed;
+  bottom: -20px;
+  font-size: 20px;
+  animation: floatUp 6s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-110vh) scale(1.5);
+    opacity: 0;
+  }
+}
 </style>
 </head>
 
 <body>
 
-<div class="container">
-  <h1>Una gran sorpresa esta por llegar 🎂💜</h1>
-  <p>Te quiero mucho mi flaca hermosa.</p>
+<div class="container" id="card">
+  <h1 id="title">Una gran sorpresa esta por llegar 🎂💜</h1>
+  <p id="message">Te quiero mucho mi flaca hermosa.</p>
   <div id="countdown"></div>
 </div>
 
@@ -67,9 +100,32 @@ var x = setInterval(function() {
 
   if (distancia < 0) {
     clearInterval(x);
-    document.getElementById("countdown").innerHTML = "Hoy es tu día ❤️";
+    document.getElementById("countdown").innerHTML = "";
+
+    // Cambio sorpresa
+    document.getElementById("title").innerHTML = "Feliz Cumpleaños Mi Amor 🎉💖";
+    document.getElementById("message").innerHTML = "Que este nuevo año esté lleno de alegría, sueños cumplidos y muchos momentos juntos.";
+
+    document.body.style.background = "linear-gradient(135deg, #ff758c, #ff7eb3)";
   }
 }, 1000);
+
+// Generar corazones aleatorios
+function crearCorazon() {
+  var heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML = "💜";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (15 + Math.random() * 20) + "px";
+  heart.style.animationDuration = (4 + Math.random() * 3) + "s";
+  document.body.appendChild(heart);
+
+  setTimeout(function() {
+    heart.remove();
+  }, 7000);
+}
+
+setInterval(crearCorazon, 800);
 </script>
 
 </body>
