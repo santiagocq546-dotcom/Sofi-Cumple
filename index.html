@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Feliz Cumple Sofi 🎂</title>
 
-<!-- Fuente bonita -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
 
 <style>
@@ -32,7 +31,6 @@ body {
   border-radius: 20px;
   display: inline-block;
   backdrop-filter: blur(8px);
-  animation: aparecer 1.5s ease;
   max-width: 90%;
 }
 
@@ -66,9 +64,21 @@ h1 {
   white-space: pre-line;
 }
 
-@keyframes aparecer {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+.btn-musica {
+  margin-top: 25px;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 30px;
+  background: #ff4f81;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-musica:hover {
+  background: #ff2e6a;
+  transform: scale(1.05);
 }
 
 .heart {
@@ -96,24 +106,16 @@ h1 {
 
   <div id="countdown"></div>
 
-  <audio id="musica" src="cancion.mp3.mp3" preload="auto"></audio>
+  <audio id="musica" src="cancion.mp3" preload="auto"></audio>
 
   <div class="mensaje-final" id="mensajeFinal"></div>
 
 </div>
 
 <script>
-// Activar audio con primer clic (evita bloqueo)
-document.addEventListener("click", function activarAudio() {
-  var audio = document.getElementById("musica");
-  audio.play().then(function() {
-    audio.pause();
-    audio.currentTime = 0;
-  }).catch(()=>{});
-  document.removeEventListener("click", activarAudio);
-});
 
-var fecha = new Date().getTime() - 1000;
+// FECHA REAL (cámbiala cuando termines pruebas)
+var fecha = new Date(2026, 1, 28, 6, 0, 0).getTime();
 
 var mensajeCompleto = 
 `Buenos días, mi flaca linda 💜
@@ -143,12 +145,10 @@ var x = setInterval(function() {
 
     document.getElementById("title").innerHTML = "Feliz Cumpleaños Mi Flaca Linda 💜";
 
-    document.getElementById("mensajeFinal").style.display = "block";
-
     document.body.style.background =
     "linear-gradient(135deg, #ff758c, #ff7eb3)";
 
-    document.getElementById("musica").play();
+    document.getElementById("mensajeFinal").style.display = "block";
 
     escribirMensaje();
   }
@@ -157,16 +157,35 @@ var x = setInterval(function() {
 // Máquina de escribir
 function escribirMensaje() {
   var i = 0;
-  var velocidad = 35; // mientras menor número, más rápido
+  var velocidad = 35;
+  var contenedor = document.getElementById("mensajeFinal");
+  contenedor.innerHTML = "";
 
   function escribir() {
     if (i < mensajeCompleto.length) {
-      document.getElementById("mensajeFinal").innerHTML += mensajeCompleto.charAt(i);
+      contenedor.innerHTML += mensajeCompleto.charAt(i);
       i++;
       setTimeout(escribir, velocidad);
+    } else {
+      mostrarBotonMusica();
     }
   }
   escribir();
+}
+
+// Botón música (sin bloqueo)
+function mostrarBotonMusica() {
+  var btn = document.createElement("button");
+  btn.innerText = "Tocar canción 💜";
+  btn.className = "btn-musica";
+
+  btn.onclick = function() {
+    var audio = document.getElementById("musica");
+    audio.play();
+    btn.remove();
+  };
+
+  document.getElementById("mensajeFinal").appendChild(btn);
 }
 
 // Corazones
@@ -185,6 +204,7 @@ function crearCorazon() {
 }
 
 setInterval(crearCorazon, 800);
+
 </script>
 
 </body>
