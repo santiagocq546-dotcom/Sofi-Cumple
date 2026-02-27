@@ -23,14 +23,13 @@ body {
 }
 
 .container {
-  margin-top: 10vh;
+  margin-top: 8vh;
   background: rgba(0, 0, 0, 0.25);
   padding: 40px;
   border-radius: 20px;
   display: inline-block;
   backdrop-filter: blur(6px);
   animation: aparecer 1.5s ease;
-  transition: 0.5s;
   max-width: 90%;
 }
 
@@ -47,11 +46,6 @@ h1 {
   display: block;
   box-shadow: 0 15px 30px rgba(0,0,0,0.4);
   border: 4px solid white;
-  transition: transform 0.4s ease;
-}
-
-.foto:hover {
-  transform: scale(1.05);
 }
 
 #countdown {
@@ -59,22 +53,13 @@ h1 {
   margin-top: 20px;
 }
 
-/* Botón música */
-.btn {
+.mensaje-final {
+  display: none;
+  text-align: left;
   margin-top: 20px;
-  padding: 12px 25px;
-  border: none;
-  border-radius: 30px;
-  background: #ff4f81;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.btn:hover {
-  background: #ff2e6a;
-  transform: scale(1.05);
+  font-size: 18px;
+  line-height: 1.6;
+  animation: aparecer 2s ease;
 }
 
 @keyframes aparecer {
@@ -103,23 +88,46 @@ h1 {
 
   <h1 id="title">Una gran sorpresa esta por llegar 🎂💜</h1>
 
-  <img src="sofi.jpg.png" class="foto">
-
-  <p id="message">Te quiero mucho mi flaca hermosa.</p>
+  <img src="sofi.jpg.png" class="foto" id="foto">
 
   <div id="countdown"></div>
 
-  <!-- BOTÓN MÚSICA -->
-  <button id="btnMusica" onclick="reproducirMusica()" class="btn">
-    Reproducir canción 💜
-  </button>
-
   <audio id="musica" src="cancion.mp3.mp3"></audio>
+
+  <div class="mensaje-final" id="mensajeFinal">
+    <p><strong>Buenos días, mi niña hermosa.</strong></p>
+
+    <p>
+    Hoy el mundo celebra algo muy especial… tu existencia. Y yo celebro la suerte que tengo de compartir mi vida contigo.
+    </p>
+
+    <p>
+    Quiero recordarte cuánto te quiero y lo importante que eres para mí. Tal vez no siempre digo todo lo que siento, pero lo llevo muy claro en el corazón.
+    Te admiro por tu forma de ser, por tu dulzura, por tu carácter y por esa manera tan tuya de hacer que todo tenga más sentido.
+    </p>
+
+    <p>
+    Me siento profundamente orgulloso de ti, de tus logros, de tu crecimiento y de cada meta que alcanzas.
+    Verte feliz también me hace feliz, y verte brillar me llena de una alegría que no se puede explicar fácil.
+    </p>
+
+    <p>
+    Espero que la vida me regale muchos años más a tu lado… para seguir construyendo recuerdos, viajar contigo,
+    robarte picos sin previo aviso y, por supuesto, seguir regalándote cucos lindos 😉.
+    </p>
+
+    <p>
+    Que este nuevo año esté lleno de amor, sueños cumplidos y momentos que nos hagan sonreír como niños.
+    </p>
+
+    <p><strong>Feliz cumpleaños, mi Sofi bonita.<br>
+    Te quiero muchísimo. 💜</strong></p>
+  </div>
 
 </div>
 
 <script>
-var fecha = new Date().getTime() - 1000;
+var fecha = new Date(2026, 1, 28, 6, 0, 0).getTime();
 
 var x = setInterval(function() {
   var ahora = new Date().getTime();
@@ -135,11 +143,13 @@ var x = setInterval(function() {
 
   if (distancia < 0) {
     clearInterval(x);
-    document.getElementById("countdown").innerHTML = "";
+
+    document.getElementById("countdown").style.display = "none";
+    document.getElementById("foto").style.display = "none";
 
     document.getElementById("title").innerHTML = "Feliz Cumpleaños Mi Amor 🎉💖";
-    document.getElementById("message").innerHTML =
-    "Hoy celebramos a la persona más hermosa que existe. Gracias por llenar mi vida de luz y amor. 💜";
+
+    document.getElementById("mensajeFinal").style.display = "block";
 
     document.body.style.background =
     "linear-gradient(135deg, #ff758c, #ff7eb3)";
@@ -147,13 +157,6 @@ var x = setInterval(function() {
     document.getElementById("musica").play();
   }
 }, 1000);
-
-/* Reproducir música manual */
-function reproducirMusica() {
-  var audio = document.getElementById("musica");
-  audio.play();
-  document.getElementById("btnMusica").style.display = "none";
-}
 
 /* Corazones */
 function crearCorazon() {
