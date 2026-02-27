@@ -103,7 +103,7 @@ h1 {
 
 <script>
 
-var fecha = new Date().getTime() + (2 * 60 * 1000);
+var fecha = new Date().getTime() + (2 * 60 * 1000); // prueba 2 minutos
 
 var mensajeCompleto = 
 `Buenos días, mi flaca linda 💜
@@ -125,7 +125,18 @@ var x = setInterval(function() {
   var ahora = new Date().getTime();
   var distancia = fecha - ahora;
 
-  if (distancia < 0) {
+  if (distancia > 0) {
+
+    var dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+    var horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+    var segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+
+    document.getElementById("countdown").innerHTML =
+      dias + "d " + horas + "h " + minutos + "m " + segundos + "s ";
+  }
+
+  if (distancia <= 0) {
     clearInterval(x);
 
     document.getElementById("countdown").style.display = "none";
@@ -133,13 +144,14 @@ var x = setInterval(function() {
 
     document.getElementById("title").innerHTML = "Feliz Cumpleaños Mi Flaca Linda 💜";
 
-    document.getElementById("mensajeFinal").style.display = "block";
-
     document.body.style.background =
     "linear-gradient(135deg, #ff758c, #ff7eb3)";
 
+    document.getElementById("mensajeFinal").style.display = "block";
+
     escribirMensaje();
   }
+
 }, 1000);
 
 function escribirMensaje() {
