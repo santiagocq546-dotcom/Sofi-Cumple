@@ -5,10 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Feliz Cumple Sofi 🎂</title>
 
+<!-- Fuente bonita -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+
 <style>
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: 'Poppins', sans-serif;
   text-align: center;
   color: white;
   overflow-x: hidden;
@@ -24,17 +27,18 @@ body {
 
 .container {
   margin-top: 8vh;
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.35);
   padding: 40px;
   border-radius: 20px;
   display: inline-block;
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(8px);
   animation: aparecer 1.5s ease;
   max-width: 90%;
 }
 
 h1 {
-  font-size: 2.5em;
+  font-family: 'Playfair Display', serif;
+  font-size: 2.6em;
 }
 
 .foto {
@@ -58,8 +62,8 @@ h1 {
   text-align: left;
   margin-top: 20px;
   font-size: 18px;
-  line-height: 1.6;
-  animation: aparecer 2s ease;
+  line-height: 1.7;
+  white-space: pre-line;
 }
 
 @keyframes aparecer {
@@ -92,53 +96,44 @@ h1 {
 
   <div id="countdown"></div>
 
-  <audio id="musica" src="cancion.mp3.mp3"></audio>
+  <audio id="musica" src="cancion.mp3.mp3" preload="auto"></audio>
 
-  <div class="mensaje-final" id="mensajeFinal">
-    <p><strong>Buenos días, mi flaca linda 💜</strong></p>
-
-    <p>
-    Hoy el mundo celebra algo muy especial… tu existencia. Y yo celebro la suerte que tengo de compartir mi vida contigo.
-    </p>
-
-    <p>
-    Quiero recordarte cuánto te quiero y lo importante que eres para mí. Tal vez no siempre digo todo lo que siento, pero lo llevo muy claro en el corazón.
-    Te admiro por tu forma de ser, por tu dulzura, por tu carácter y por esa manera tan tuya de hacer que todo tenga más sentido.
-    </p>
-
-    <p>
-    Me siento profundamente orgulloso de ti, de tus logros, de tu crecimiento y de cada meta que alcanzas.
-    Verte feliz también me hace feliz, y verte brillar me llena de una alegría que no se puede explicar fácil.
-    </p>
-
-    <p>
-    Espero que la vida me regale muchos años más a tu lado… para seguir construyendo recuerdos, viajar contigo,
-    robarte picos sin previo aviso y, por supuesto, seguir regalándote cucos lindos 😉.
-    </p>
-    <p>
-    Que este nuevo año esté lleno de amor, sueños cumplidos y momentos que nos hagan sonreír como niños.
-    </p>
-
-    <p><strong>Feliz cumpleaños, mi Sofi bonita.<br>
-    Te quiero muchísimo. 💜</strong></p>
-  </div>
+  <div class="mensaje-final" id="mensajeFinal"></div>
 
 </div>
 
 <script>
+// Activar audio con primer clic (evita bloqueo)
+document.addEventListener("click", function activarAudio() {
+  var audio = document.getElementById("musica");
+  audio.play().then(function() {
+    audio.pause();
+    audio.currentTime = 0;
+  }).catch(()=>{});
+  document.removeEventListener("click", activarAudio);
+});
+
 var fecha = new Date().getTime() - 1000;
+
+var mensajeCompleto = 
+`Buenos días, mi flaca linda 💜
+
+Hoy el mundo celebra algo muy especial… tu existencia. Y yo celebro la suerte que tengo de compartir mi vida contigo.
+
+Quiero recordarte cuánto te quiero y lo importante que eres para mí. Tal vez no siempre digo todo lo que siento, pero lo llevo muy claro en el corazón. Te admiro por tu forma de ser, por tu dulzura, por tu carácter y por esa manera tan tuya de hacer que todo tenga más sentido.
+
+Me siento profundamente orgulloso de ti, de tus logros, de tu crecimiento y de cada meta que alcanzas. Verte feliz también me hace feliz, y verte brillar me llena de una alegría que no se puede explicar fácil.
+
+Espero que la vida me regale muchos años más a tu lado… para seguir construyendo recuerdos, viajar contigo, robarte picos sin previo aviso y, por supuesto, seguir regalándote cucos lindos 😉.
+
+Que este nuevo año esté lleno de amor, sueños cumplidos y momentos que nos hagan sonreír como niños.
+
+Feliz cumpleaños, mi Sofi bonita.
+Te quiero muchísimo. 💜`;
 
 var x = setInterval(function() {
   var ahora = new Date().getTime();
   var distancia = fecha - ahora;
-
-  var dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
-  var horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  var minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
-  var segundos = Math.floor((distancia % (1000 * 60)) / 1000);
-
-  document.getElementById("countdown").innerHTML =
-  dias + "d " + horas + "h " + minutos + "m " + segundos + "s ";
 
   if (distancia < 0) {
     clearInterval(x);
@@ -154,10 +149,27 @@ var x = setInterval(function() {
     "linear-gradient(135deg, #ff758c, #ff7eb3)";
 
     document.getElementById("musica").play();
+
+    escribirMensaje();
   }
 }, 1000);
 
-/* Corazones */
+// Máquina de escribir
+function escribirMensaje() {
+  var i = 0;
+  var velocidad = 35; // mientras menor número, más rápido
+
+  function escribir() {
+    if (i < mensajeCompleto.length) {
+      document.getElementById("mensajeFinal").innerHTML += mensajeCompleto.charAt(i);
+      i++;
+      setTimeout(escribir, velocidad);
+    }
+  }
+  escribir();
+}
+
+// Corazones
 function crearCorazon() {
   var heart = document.createElement("div");
   heart.classList.add("heart");
