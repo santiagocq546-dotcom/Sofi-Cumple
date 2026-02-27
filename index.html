@@ -22,7 +22,6 @@ body {
   background-attachment: fixed;
 }
 
-/* Tarjeta central */
 .container {
   margin-top: 10vh;
   background: rgba(0, 0, 0, 0.25);
@@ -39,7 +38,6 @@ h1 {
   font-size: 2.5em;
 }
 
-/* FOTO */
 .foto {
   width: 280px;
   max-width: 100%;
@@ -61,18 +59,29 @@ h1 {
   margin-top: 20px;
 }
 
-@keyframes aparecer {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Botón música */
+.btn {
+  margin-top: 20px;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 30px;
+  background: #ff4f81;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-/* Corazones flotando */
+.btn:hover {
+  background: #ff2e6a;
+  transform: scale(1.05);
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .heart {
   position: fixed;
   bottom: -20px;
@@ -82,14 +91,8 @@ h1 {
 }
 
 @keyframes floatUp {
-  0% {
-    transform: translateY(0) scale(1);
-    opacity: 0.6;
-  }
-  100% {
-    transform: translateY(-110vh) scale(1.5);
-    opacity: 0;
-  }
+  0% { transform: translateY(0) scale(1); opacity: 0.6; }
+  100% { transform: translateY(-110vh) scale(1.5); opacity: 0; }
 }
 </style>
 </head>
@@ -105,6 +108,13 @@ h1 {
   <p id="message">Te quiero mucho mi flaca hermosa.</p>
 
   <div id="countdown"></div>
+
+  <!-- BOTÓN MÚSICA -->
+  <button id="btnMusica" onclick="reproducirMusica()" class="btn">
+    Reproducir canción 💜
+  </button>
+
+  <audio id="musica" src="cancion.mp3.mp3"></audio>
 
 </div>
 
@@ -133,8 +143,17 @@ var x = setInterval(function() {
 
     document.body.style.background =
     "linear-gradient(135deg, #ff758c, #ff7eb3)";
+
+    document.getElementById("musica").play();
   }
 }, 1000);
+
+/* Reproducir música manual */
+function reproducirMusica() {
+  var audio = document.getElementById("musica");
+  audio.play();
+  document.getElementById("btnMusica").style.display = "none";
+}
 
 /* Corazones */
 function crearCorazon() {
